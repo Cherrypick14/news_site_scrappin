@@ -39,7 +39,7 @@ def news_scrap():
     text.insert(1.0, my_data)
 
 
-myButton = Button(window, width=20, text=" Start Srap", command=news_scrap)
+myButton = Button(window, width=20, text=" Start Scrap", command=news_scrap)
 
 
 canvas.create_window(410, 50, window=Label)

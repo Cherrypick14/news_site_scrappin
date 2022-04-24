@@ -8,7 +8,7 @@ import urllib.request
 
 
 # initialize our screen
-window =Tk()
+window = Tk()
 
 # give it a title
 
@@ -21,46 +21,34 @@ canvas = Canvas(window, width=800, height=600)
 
 canvas.pack()
 
-#window.geometry('800x500')
+# window.geometry('800x500')
 
-window.configure(background='#A6CFA0')
+window.configure(background="#A6CFA0")
 
-Label= Label(window, text="Enter a URL here: ",font=('Open Sarif', 12))
+Label = Label(window, text="Enter a URL here: ", font=("Open Sarif", 12))
 text_input = Entry(window, width=50)
 text_input.insert(END, "https://www.")
-text= Text(window)
+text = Text(window)
+
 
 def news_scrap():
     with urllib.request.urlopen(text_input.get()) as response:
-        soup = BeautifulSoup(response.read(), 'html.parser')
-    data= soup.body.text
-    my_data= soup.prettify()
-    text.insert(1.0,my_data)
+        soup = BeautifulSoup(response.read(), "html.parser")
+    data = soup.body.text
+    my_data = soup.prettify()
+    text.insert(1.0, my_data)
 
 
-myButton = Button(window, width=20, text=" Start Srap", command=news_scrap)
+myButton = Button(window, width=20, text=" Start Scrap", command=news_scrap)
 
 
-canvas.create_window(410,50, window=Label)
-canvas.create_window(410,80, window=text_input)
-canvas.create_window(400,300, window=text)
-canvas.create_window(410,520, window=myButton)
-#Label.pack()
-#text_input.pack()
-#text.pack()
-#myButton.pack()
+canvas.create_window(410, 50, window=Label)
+canvas.create_window(410, 80, window=text_input)
+canvas.create_window(400, 300, window=text)
+canvas.create_window(410, 520, window=myButton)
+# Label.pack()
+# text_input.pack()
+# text.pack()
+# myButton.pack()
 
 window.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-
-

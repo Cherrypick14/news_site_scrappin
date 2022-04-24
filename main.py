@@ -10,8 +10,6 @@ import urllib.request
 # initialize our screen
 window =Tk()
 
-# give it a title
-
 title = window.title("Welcome to your favorite web scraping app")
 
 #   give our window some dimensions
@@ -20,8 +18,6 @@ title = window.title("Welcome to your favorite web scraping app")
 canvas = Canvas(window, width=800, height=600)
 
 canvas.pack()
-
-#window.geometry('800x500')
 
 window.configure(background='#A6CFA0')
 
@@ -34,8 +30,8 @@ def news_scrap():
     with urllib.request.urlopen(text_input.get()) as response:
         soup = BeautifulSoup(response.read(), 'html.parser')
     data= soup.body.text
-    my_data= soup.prettify()
-    text.insert(1.0,my_data)
+    #my_data= soup.prettify()
+    text.insert(1.0,data)
 
 
 myButton = Button(window, width=20, text=" Start Srap", command=news_scrap)
@@ -45,10 +41,7 @@ canvas.create_window(410,50, window=Label)
 canvas.create_window(410,80, window=text_input)
 canvas.create_window(400,300, window=text)
 canvas.create_window(410,520, window=myButton)
-#Label.pack()
-#text_input.pack()
-#text.pack()
-#myButton.pack()
+
 
 window.mainloop()
 

@@ -4,9 +4,9 @@
 
 from bs4 import BeautifulSoup
 from tkinter import *
-from tkinter import ttk
 import os
 import urllib.request
+from urllib.parse import urlparse
 
 
 # initialize our screen
@@ -29,20 +29,31 @@ Label= Label(window, text="Enter a URL here: ",font=('Open Sarif', 12))
 text_input = Entry(window, width=50)
 text_input.insert(END, "https://www.")
 text= Text(window) 
-scrollbar=ttk.Scrollbar(window, orient='vertical', command=text.yview)
+scrollbar=Scrollbar(window, orient='vertical', command=text.yview)
 text.config(yscrollcommand=scrollbar.set,font=('Arial', 8, 'bold', 'italic'))
 text.config(state=NORMAL)
 text['yscrollcommand'] = scrollbar.set
 
 # defining our functionalities
+
+def uri_validator(url):
+    '''ensure url provided is valid'''
+    try:
+        result = urlparse(url)
+        return all([result.scheme, result.netloc])
+    except:
+        return False
+
+
 def news_scrap():
-    with urllib.request.urlopen(text_input.get()) as response:
-        soup = BeautifulSoup(response.read(), 'html.parser')
-      
-    data= soup.body.text
-    text.insert(1.0,data)
-    f=open('data.txt','w+') 
-    print(f.write(data))
+    if uri_validator(text_input.get()):
+        with urllib.request.urlopen(text_input.get()) as response:
+            soup = BeautifulSoup(response.read(), 'html.parser')
+        
+        data= soup.body.text
+        text.insert(1.0,data)
+        f=open('data.txt','w+') 
+        f.write(data)
       
 def delete_text():
     text.delete('1.0','end') 
@@ -56,7 +67,7 @@ def clear_url():
     text_input.delete('0','end')
 
 # defining our buttons
-myButton = Button(window, width=10, text=" Start Srap", bg='#41418B',fg='#fff', command=news_scrap)
+myButton = Button(window, width=10, text=" Start Scrap", bg='#41418B',fg='#fff', command=news_scrap)
 myDeletebtn = Button(window, width=10,text=" Delete", bg='#F50035',fg='#fff',command= delete_text)
 myClearUrlbtn = Button(window, width=10,text=" Clear URL",bg='#4790EA',fg='#fff', command= clear_url)
 mySavebtn = Button(window, width=10,text=" Open file",bg='#33CC6D',fg='#fff', command= open_file)
@@ -72,9 +83,10 @@ canvas.create_window(330,510, window=mySavebtn)
 canvas.create_window(460,510, window=myClearUrlbtn)
 canvas.create_window(600,510, window=myDeletebtn)
 
+if __name__=="__main__":
+  
 
-
-window.mainloop()
+    window.mainloop()
 
 
 
